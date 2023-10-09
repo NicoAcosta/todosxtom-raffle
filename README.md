@@ -4,7 +4,7 @@ Las rifas se llevarán a cabo de la siguiente forma:
 
 ## Colaboración
 
-Para colaborar con 1 (una) rifa hay que hacer una transferencia a la dirección [ADDRESS] uno de los siguientes:
+Para colaborar con 1 (una) rifa hay que hacer una transferencia a la dirección [ADDRESS] con uno de los siguientes:
 
 | Red      | Token | Cantidad |
 | -------- | ----- | -------- |
