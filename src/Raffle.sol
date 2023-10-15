@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
+error NonDeployer();
+
 contract Raffle {
     uint256 public constant PRIZES_AMOUNT = 10; // pending
 
@@ -11,6 +13,12 @@ contract Raffle {
     mapping(uint256 ticketNumber => bool) public alreadyWon;
 
     bool public alreadyRaffled;
+
+    address public immutable deployer;
+
+    constructor() {
+        deployer = msg.sender;
+    }
 
     function raffle() external {
         require(!alreadyRaffled, "Already raffled");
@@ -45,5 +53,17 @@ contract Raffle {
                     )
                 )
             ) % ticketsAmount) + 1;
+    }
+
+    function withdrawETH(address to) external {
+        if (msg.sender != deployer) revert NonDeployer();
+
+        payable(to).transfer(address(this).balance);
+    }
+
+    function withdrawToken(address token, address to) external {
+        if (msg.sender != deployer) revert NonDeployer();
+
+        IERC20(token).transfer(to, IERC20(token).balanceOf(address(this)));
     }
 }
