@@ -8,14 +8,20 @@ Para colaborar con 1 (una) rifa hay que hacer una transferencia a la dirección 
 
 | Red      | Token | Cantidad |
 | -------- | ----- | -------- |
-| Polygon  | MATIC | 10       |
-| Polygon  | USDT  | 5        |
-| Polygon  | USDC  | 5        |
-| Polygon  | DAI   | 5        |
 | Ethereum | ETH   | 0.003    |
 | Ethereum | USDT  | 5        |
 | Ethereum | USDC  | 5        |
 | Ethereum | DAI   | 5        |
+| Polygon  | MATIC | 10       |
+| Polygon  | wETH  | 0.003    |
+| Polygon  | USDT  | 5        |
+| Polygon  | USDC  | 5        |
+| Polygon  | DAI   | 5        |
+| Optimism | ETH   | 0.003    |
+| Optimism | OP    | 4        |
+| Optimism | USDT  | 5        |
+| Optimism | USDC  | 5        |
+| Optimism | DAI   | 5        |
 
 Para colaborar con más rifas hay que transferir la cantidad del token deseado de 1 (una) rifa multiplicada por la cantidad de rifas. Por ejemplo, 30 MATIC, 15 USDC o 0.009 ETH equivalen a 3 rifas.
 
