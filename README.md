@@ -23,7 +23,7 @@ Para colaborar con 1 (una) rifa hay que hacer una transferencia a la dirección 
 | Optimism | USDC  | 5        |
 | Optimism | DAI   | 5        |
 
-Para colaborar con más rifas hay que transferir la cantidad del token deseado de 1 (una) rifa multiplicada por la cantidad de rifas. Por ejemplo, 30 MATIC, 15 USDC o 0.009 ETH equivalen a 3 rifas.
+Para colaborar con más rifas hay que transferir la cantidad del token deseado de 1 (una) rifa multiplicada por la cantidad de rifas. Por ejemplo, una transferencia de 30 MATIC, 15 USDC o 0.009 ETH equivale a 3 rifas.
 
 ## Distribución de rifas
 
