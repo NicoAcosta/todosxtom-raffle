@@ -4,17 +4,21 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 error NonDeployer();
+error AlreadyRaffled(uint256 alreadyRaffled);
 
 contract Raffle {
-    uint256 public constant PRIZES_AMOUNT = 10; // pending
+    event NewRaffle(
+        uint256 timestamp,
+        uint256 prizeNumber,
+        uint256 ticketNumber,
+        string csvsIpfsHash
+    );
 
-    uint256 public immutable ticketsAmount = 10; // pending
+    mapping(uint256 prizeNumber => bool) public alreadyRaffled;
 
     mapping(uint256 prizeNumber => uint256 ticketNumber) public winners;
 
-    mapping(uint256 ticketNumber => bool) public alreadyWon;
-
-    bool public alreadyRaffled;
+    mapping(uint256 prizeNumber => string ipfsHas) public csvs;
 
     address public immutable deployer;
 
@@ -22,28 +26,35 @@ contract Raffle {
         deployer = msg.sender;
     }
 
-    function raffle() external {
-        require(!alreadyRaffled, "Already raffled");
+    function raffle(
+        uint256 prizeNumber,
+        string memory csvsIpfsHash,
+        uint256 totalTickets
+    ) external {
+        if (msg.sender != deployer) revert NonDeployer();
 
-        for (uint256 i = 1; i <= PRIZES_AMOUNT; i++) {
-            _setWinner(i);
-        }
+        if (alreadyRaffled[prizeNumber]) revert AlreadyRaffled(prizeNumber);
 
-        alreadyRaffled = true;
+        uint256 _winnerTicketId = _randomId(prizeNumber, totalTickets);
+
+        winners[prizeNumber] = _winnerTicketId;
+
+        csvs[prizeNumber] = csvsIpfsHash;
+
+        alreadyRaffled[prizeNumber] = true;
+
+        emit NewRaffle(
+            block.timestamp,
+            prizeNumber,
+            _winnerTicketId,
+            csvsIpfsHash
+        );
     }
 
-    function _setWinner(uint256 prizeNumber) private {
-        uint256 winnerTicketId;
-
-        do {
-            winnerTicketId = _randomId(prizeNumber);
-        } while (alreadyWon[winnerTicketId]);
-
-        winners[prizeNumber] = winnerTicketId;
-        alreadyWon[winnerTicketId] = true;
-    }
-
-    function _randomId(uint256 i) private view returns (uint256) {
+    function _randomId(
+        uint256 _prizeNumber,
+        uint256 _totalTickets
+    ) private view returns (uint256) {
         return
             (uint256(
                 keccak256(
@@ -51,10 +62,11 @@ contract Raffle {
                         blockhash(block.number),
                         block.timestamp,
                         msg.sender,
-                        i
+                        _prizeNumber,
+                        _totalTickets
                     )
                 )
-            ) % ticketsAmount) + 1;
+            ) % _totalTickets) + 1;
     }
 
     function withdrawETH(address to) external {
